@@ -1,0 +1,6 @@
+venv
+teste.py
+__pycache__
+credenciais.json
+instance
+login
