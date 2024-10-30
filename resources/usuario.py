@@ -17,7 +17,7 @@ args.add_argument("nome", type=str, required=True,
 args.add_argument("perfil",type=int, required=True, 
                        help="The field 'perfil' cannot be left blank")
 
-class User(Resource):
+class UserInfor(Resource):
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity() 
@@ -82,3 +82,27 @@ class UserLogout(Resource):
         BLACKLIST.add(jwt_id)
         unset_jwt_cookies(response)
         return response
+    
+class User(Resource):
+    args = reqparse.RequestParser()
+    args.add_argument('senha', type=str, required=True,
+                       help="The field 'senha' cannot be left blank")
+    
+    @jwt_required()
+    def put(self, usuario_id):
+        data = User.args.parse_args()
+        user = UserModel.find_user(usuario_id)
+        if user:
+            user.update_user(**data)
+            user.save_user()
+            return user.json(), 200
+        return {'message': 'User not found'}, 404
+    
+    def delete(self, usuario_id):
+        user = UserModel.find_user(usuario_id)
+        if user:
+            user.delete_user()
+            return {'message': 'User deleted'}, 200
+        return {'message': 'User not found'}, 404
+
+            

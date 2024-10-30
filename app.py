@@ -3,7 +3,7 @@ from flask_restful import Api
 from blacklist import BLACKLIST
 from resources.cliente import (Clientes, Cliente, Update_Cliente, Cancels_Appointment,
                                 DownloadClientes, Status_Clients)
-from resources.usuario import User, UserRegister, UserLogin, UserLogout
+from resources.usuario import User, UserInfor, UserRegister, UserLogin, UserLogout
 from resources.qrcode import ValidQrcode
 from flask_jwt_extended import JWTManager
 #from config import *
@@ -57,7 +57,8 @@ api.add_resource(Clientes, '/clientes')
 api.add_resource(Cliente, '/cadcliente')
 api.add_resource(Update_Cliente, '/cliente/<int:cliente_id>')
 api.add_resource(Cancels_Appointment, '/cancellation/<int:cliente_id>')
-api.add_resource(User, '/usuario')
+api.add_resource(User, '/usuario/<int:usuario_id>')
+api.add_resource(UserInfor, '/usuario')
 api.add_resource(UserRegister, '/cadastro')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')

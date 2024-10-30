@@ -51,6 +51,9 @@ class UserModel(banco.Model):
         banco.session.add(self)
         banco.session.commit()
 
+    def update_user(self,senha):
+        self.senha = senha
+    
     def delete_user(self):
         banco.session.delete(self)
         banco.session.commit()

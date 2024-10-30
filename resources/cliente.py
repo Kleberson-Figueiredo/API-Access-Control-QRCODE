@@ -212,13 +212,13 @@ class Update_Cliente(Resource):
         cliente_enc.save_cliente()
         return cliente_enc.json(), 200
         
-    @jwt_required()
+"""     @jwt_required()
     def delete(self, cliente_id):
         cliente = ClienteModel.find_cliente(cliente_id)
         if cliente:
             cliente.delete_cliente()
             return {'message': 'Cliente deleted.'}
-        return {'message': 'Cliente not found.'}, 404
+        return {'message': 'Cliente not found.'}, 404 """
     
 class Cancels_Appointment(Resource):
     args = reqparse.RequestParser()
