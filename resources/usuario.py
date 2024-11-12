@@ -4,7 +4,7 @@ from models.usuario import UserModel
 from flask_jwt_extended import (get_jwt,create_access_token, 
     jwt_required, get_jwt_identity, unset_jwt_cookies
 )
-from werkzeug.security import safe_join
+import hmac
 from blacklist import BLACKLIST
 
 args = reqparse.RequestParser()
@@ -66,7 +66,7 @@ class UserLogin(Resource):
         data = UserLogin.args.parse_args()
         user = UserModel.find_by_login(data["login"])
 
-        if user and safe_join(user.senha, data['senha']): 
+        if user and hmac.compare_digest(user.senha, data['senha']): 
             access_token = create_access_token(identity=user.usuario_id)
             response = make_response(jsonify(user.json()))
             response.set_cookie('token', access_token, httponly=True, path="/", secure=True, samesite="None")
@@ -105,4 +105,21 @@ class User(Resource):
             return {'message': 'User deleted'}, 200
         return {'message': 'User not found'}, 404
 
+class Users(Resource):
+    @jwt_required()
+    def get(self):
+        result = UserModel.get_users()
+
+        users = []
+        if result:
+            for linha in result:
+                users.append({
+                    'usuario_id': linha.usuario_id,
+                    'login': linha.login,
+                    'nome': linha.nome,
+                    'perfil': linha.perfil,
+                })
+
+        return {'Users': users}
+    pass
             

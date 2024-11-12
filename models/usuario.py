@@ -34,6 +34,13 @@ class UserModel(banco.Model):
         return None
     
     @classmethod
+    def get_users(cls):
+        user = cls.query.all()
+        if user:
+            return user
+        return None
+    
+    @classmethod
     def find_by_login(cls, login):
         login = cls.query.filter_by(login=login).first()
         if login:
