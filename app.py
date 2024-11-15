@@ -4,7 +4,7 @@ from blacklist import BLACKLIST
 from resources.cliente import (Clientes, Cliente, Update_Cliente, Cancels_Appointment,
                                 DownloadClientes, Status_Clients)
 from resources.usuario import User, Users, UserInfor, UserRegister, UserLogin, UserLogout
-from resources.qrcode import ValidQrcode
+from resources.qrcode import ValidQrcode, DownloadQrcode
 from flask_jwt_extended import JWTManager
 #from config import *
 from flask_cors import CORS
@@ -64,6 +64,7 @@ api.add_resource(UserRegister, '/cadastro')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(ValidQrcode, '/qrcode')
+api.add_resource(DownloadQrcode, '/qr-code/<string:codqr>')
 api.add_resource(DownloadClientes, '/clientes/download')
 api.add_resource(Status_Clients, '/status')
 

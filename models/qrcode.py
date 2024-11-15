@@ -9,6 +9,12 @@ class QrCodeModel(banco.Model):
 
     def __init__(self, codqr):
         self.codqr = codqr
+    
+    def json(self):
+        return {
+            'codqr': self.codqr
+        }
+
 
     @classmethod
     def find_by_qrcode(cls, codqr):

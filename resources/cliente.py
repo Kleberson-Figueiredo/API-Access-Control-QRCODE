@@ -71,8 +71,8 @@ class Clientes(Resource):
         clientes = []
         if result:
             for linha in result:
-                user = UserModel.find_user(linha[7]).json()
-                user = user["nome"]
+                #user = UserModel.find_user(linha[7]).json()
+                #user = user["nome"]
                 datager = datetime.strptime(linha[3], '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y %H:%M:%S')
                 datavis = datetime.strptime(linha[4], '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y')
                 dataaut = linha[6] 
@@ -89,7 +89,7 @@ class Clientes(Resource):
                     'dataaut': dataaut,
                     'codusuario': linha[7],
                     'status': linha[8],
-                    'usercad': user,
+                    #'usercad': user,
                 })
 
         return {'clientes': clientes}
@@ -103,7 +103,7 @@ class Clientes(Resource):
         ws.title = "Clientes"
 
         # Cabeçalhos do Excel
-        headers = ['Cliente ID', 'Nome', 'CPF', 'Data Geração', 'Data Visita', 'Código QR', 'Data Autenticação', 'Cod Usuário', 'Status', 'Usuário Cadastro']
+        headers = ['Cliente ID', 'Nome', 'CPF', 'Data Geração', 'Data Visita', 'Código QR', 'Data Autenticação', 'Cod Usuário', 'Status']
         ws.append(headers)
 
         # Preenchendo os dados no Excel
@@ -118,7 +118,7 @@ class Clientes(Resource):
                 cliente['dataaut'] if cliente['dataaut'] is not None else "N/A",
                 cliente['codusuario'],
                 cliente['status'],
-                cliente['usercad'],
+                #cliente['usercad'],
             ])
 
         # Ajustando a largura das colunas
